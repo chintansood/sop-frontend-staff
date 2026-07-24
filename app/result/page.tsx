@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { StaffSidebar } from "@/components/staff-sidebar"
 import Link from "next/link"
 
-export default function ResultPage() {
+function ResultContent() {
   const params  = useSearchParams()
   const score   = Number(params.get("score")   ?? 0)
   const passed  = params.get("passed") === "true"
@@ -88,5 +88,19 @@ export default function ResultPage() {
         </main>
       </div>
     </div>
+  )
+}
+
+import { Suspense } from "react"
+
+export default function Page() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    }>
+      <ResultContent />
+    </Suspense>
   )
 }

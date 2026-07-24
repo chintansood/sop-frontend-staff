@@ -7,7 +7,7 @@ import { Lock, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import { apiFetch, getToken } from "@/lib/api"
 
-export default function ReadPage() {
+function ReadContent() {
   const params       = useSearchParams()
   const router       = useRouter()
   const assignmentId = params.get("assignmentId")
@@ -143,5 +143,19 @@ export default function ReadPage() {
         </main>
       </div>
     </div>
+  )
+}
+
+import { Suspense } from "react"
+
+export default function Page() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    }>
+      <ReadContent />
+    </Suspense>
   )
 }

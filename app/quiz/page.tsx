@@ -8,7 +8,7 @@ import { apiFetch, getToken } from "@/lib/api"
 interface Option { id: string; text: string }
 interface Question { id: string; text: string; difficulty: string; options: Option[] }
 
-export default function QuizPage() {
+function QuizContent() {
   const params       = useSearchParams()
   const router       = useRouter()
   const assignmentId = params.get("assignmentId")
@@ -178,5 +178,19 @@ export default function QuizPage() {
         </main>
       </div>
     </div>
+  )
+}
+
+import { Suspense } from "react"
+
+export default function QuizPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    }>
+      <QuizContent />
+    </Suspense>
   )
 }
