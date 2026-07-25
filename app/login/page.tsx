@@ -69,6 +69,12 @@ export default function StaffLoginPage() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </div>
+        <p className="mt-4 text-center text-sm text-muted-foreground">
+          Admin?{" "}
+          <a href="https://sop-frontend-three.vercel.app/login" className="text-primary hover:underline">
+            Login to admin portal →
+          </a>
+        </p>
       </div>
     </div>
   )
