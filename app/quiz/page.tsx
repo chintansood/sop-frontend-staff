@@ -90,7 +90,7 @@ function QuizContent() {
   const progress = questions.length > 0 ? ((current + 1) / questions.length) * 100 : 0
 
   if (loading) return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background pt-14 md:pt-0">
       <StaffSidebar />
       <div className="flex flex-1 items-center justify-center">
         <p className="text-sm text-muted-foreground">Loading assessment...</p>
@@ -99,7 +99,7 @@ function QuizContent() {
   )
 
   if (error) return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background pt-14 md:pt-0">
       <StaffSidebar />
       <div className="flex flex-1 items-center justify-center">
         <div className="text-center">
@@ -113,7 +113,7 @@ function QuizContent() {
   )
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background pt-14 md:pt-0">
       <StaffSidebar />
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-border bg-background px-6 py-4">

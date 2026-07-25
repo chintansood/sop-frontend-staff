@@ -72,7 +72,7 @@ export default function DashboardPage() {
   const completed = assignments.filter(a => a.status === "PASSED").map(mapToSop)
 
   return (
-    <div className="flex min-h-screen bg-background text-foreground">
+    <div className="flex min-h-screen bg-background text-foreground pt-14 md:pt-0">
       <StaffSidebar />
       <main className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-5xl px-6 py-8 md:px-10">

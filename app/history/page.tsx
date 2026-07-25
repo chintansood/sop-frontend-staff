@@ -40,7 +40,7 @@ export default function HistoryPage() {
   const totalAttempts = assignments.reduce((sum, a) => sum + (a.attempts?.length ?? 0), 0)
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background pt-14 md:pt-0">
       <StaffSidebar />
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center border-b border-border bg-background px-6 py-4">
