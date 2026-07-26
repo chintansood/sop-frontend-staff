@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { BookOpen, History, Bell, ShieldCheck, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -15,7 +15,25 @@ const navItems = [
 export function StaffSidebar() {
   const pathname = usePathname()
   const router   = useRouter()
-  const [open, setOpen] = useState(false)
+  const [open, setOpen]           = useState(false)
+  const [userName, setUserName]   = useState("Staff")
+  const [userInitials, setUserInitials] = useState("ST")
+  const [schoolName, setSchoolName] = useState("SOP Portal")
+
+  useEffect(() => {
+    const token = localStorage.getItem("staff_token")
+    if (token) {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/api/v1/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(r => r.json()).then(d => {
+        if (d.fullName) {
+          setUserName(d.fullName)
+          setUserInitials(d.fullName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2))
+        }
+        if (d.schoolName) setSchoolName(d.schoolName)
+      }).catch(() => {})
+    }
+  }, [])
 
   function logout() {
     localStorage.removeItem("staff_token")
@@ -31,7 +49,7 @@ export function StaffSidebar() {
           </div>
           <div className="leading-tight">
             <p className="text-sm font-semibold text-sidebar-foreground">SOP Portal</p>
-            <p className="text-xs text-muted-foreground">Northgate Academy</p>
+            <p className="text-xs text-muted-foreground">{schoolName}</p>
           </div>
         </div>
         <button onClick={() => setOpen(false)} className="md:hidden text-muted-foreground hover:text-foreground">
@@ -68,10 +86,10 @@ export function StaffSidebar() {
           Logout
         </button>
         <div className="flex items-center gap-3 rounded-md px-2 py-2">
-          <div className="flex size-9 items-center justify-center rounded-full bg-success/20 text-sm font-semibold text-success">KR</div>
+          <div className="flex size-9 items-center justify-center rounded-full bg-success/20 text-sm font-semibold text-success">{userInitials}</div>
           <div className="min-w-0 leading-tight">
-            <p className="truncate text-sm font-medium text-sidebar-foreground">Kavita Rao</p>
-            <p className="truncate text-xs text-muted-foreground">Teaching Staff</p>
+            <p className="truncate text-sm font-medium text-sidebar-foreground">{userName}</p>
+            <p className="truncate text-xs text-muted-foreground">Staff</p>
           </div>
         </div>
       </div>
