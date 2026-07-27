@@ -9,7 +9,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'SOP Portal · Staff Dashboard',
+  title: 'SOP Management System — Staff',
   description: 'Manage and track your assigned Standard Operating Procedures.',
   generator: 'v0.app',
   icons: {
