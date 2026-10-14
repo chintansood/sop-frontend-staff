@@ -1,3 +1,4 @@
+import Link from "next/link"
 "use client"
 
 import { useEffect, useState } from "react"
@@ -83,6 +84,7 @@ export default function HistoryPage() {
                     <th className="px-5 py-3 font-medium">Score</th>
                     <th className="px-5 py-3 font-medium">Result</th>
                     <th className="px-5 py-3 font-medium">Date</th>
+                    <th className="px-5 py-3 font-medium text-right">Review</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -109,11 +111,19 @@ export default function HistoryPage() {
                             ? new Date(attempt.submittedAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
                             : "—"}
                         </td>
+                        <td className="px-5 py-3.5 text-right">
+                          <Link
+                            href={`/result?attemptId=${attempt.id}&score=${attempt.score ?? 0}&passed=${attempt.passed}&attempt=${attempt.attemptNumber}`}
+                            className="inline-flex items-center gap-1 rounded-md bg-secondary/70 px-2.5 py-1 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+                          >
+                            Review answers →
+                          </Link>
+                        </td>
                       </tr>
                     ))
                   )}
                   {assignments.every(a => !a.attempts?.length) && (
-                    <tr><td colSpan={5} className="px-5 py-8 text-sm text-muted-foreground">No attempts yet.</td></tr>
+                    <tr><td colSpan={6} className="px-5 py-8 text-sm text-muted-foreground">No attempts yet.</td></tr>
                   )}
                 </tbody>
               </table>

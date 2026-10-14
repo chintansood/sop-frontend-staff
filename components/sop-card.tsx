@@ -67,7 +67,7 @@ export function SopCard({ sop }: { sop: Sop }) {
           <ProgressBar value={sop.progress} status={sop.status} />
         </div>
         {sop.cta ? (
-  <Link href={sop.status === "completed" ? "/" : `/read?assignmentId=${sop.id}`}>
+  <Link href={sop.status === "completed" ? "/history" : `/read?assignmentId=${sop.id}`}>
     <Button
       size="sm"
       variant={sop.status === "completed" ? "secondary" : "default"}

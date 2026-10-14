@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { StaffSidebar } from "@/components/staff-sidebar"
 import { apiFetch, getToken } from "@/lib/api"
@@ -22,6 +22,7 @@ function QuizContent() {
   const [error, setError]           = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [timeLeft, setTimeLeft]     = useState(15 * 60) // 15 minutes in seconds
+  const attemptStartedRef           = useRef(false)
 
   useEffect(() => {
     if (loading || submitting) return
@@ -49,6 +50,8 @@ function QuizContent() {
     if (!getToken()) { router.push("/login"); return }
     if (!assignmentId) { router.push("/"); return }
 
+    if (attemptStartedRef.current) return;
+    attemptStartedRef.current = true;
     apiFetch(`/api/v1/assessments/${assignmentId}/attempts`, { method: "POST" })
       .then(data => {
         setAttemptId(data.attemptId)
@@ -76,7 +79,7 @@ function QuizContent() {
           method: "POST",
           body: JSON.stringify({ answers: newAnswers }),
         })
-        router.push(`/result?score=${result.score}&passed=${result.passed}&correct=${result.correctCount}&total=${result.totalQuestions}&attempt=${result.attemptNumber}`)
+        router.push(`/result?score=${result.score}&passed=${result.passed}&correct=${result.correctCount}&total=${result.totalQuestions}&attempt=${result.attemptNumber}&attemptId=${attemptId}`)
       } catch (err: any) {
         setError(err.message)
         setSubmitting(false)
